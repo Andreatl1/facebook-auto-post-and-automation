@@ -31,6 +31,7 @@ class App:
         self.main_url = main_url
         self.marketplace_your_posts = marketplace_your_posts
         self.driver.get(self.main_url)
+        WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@data-cookiebanner="accept_button"]'))).click() #per rimuover il pop-up dei cookies
         self.log_in()
         self.move_from_home_to_marketplace_your_posts()
         #while(self.ask_to_continue):
@@ -57,8 +58,16 @@ class App:
         try:
             # Need to ask if the first post exist
             sleep(6)
-            buttons = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Collection"] + '"]/div/div/div[2]/div/div/div[3]/div/span/div/div[2]/div/div[2]/div/div[2]/div/div')
+            print(self.marketplace_options["labels"]["Collection"])
+            #buttons = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Collection"] + '"]/div/div/div[2]/div/div/div[3]/div/span/div/div[2]/div/div[2]/div/div[2]/div/div')
+            
+            #problema ci sono varie parti in quella pagina con la struttura aria-label='Altro'..., quindi direi di trovarlo in base alla parentela dei nodi
+            buttons = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Collection"] + '"]') 
+            print(buttons)
+            
             buttons[len(buttons) - 1].click()
+            print(buttons[len(buttons) - 1])
+            print('\n')
             sleep(self.time_to_sleep)
             sleep(self.time_to_sleep)
             sleep(self.time_to_sleep)
