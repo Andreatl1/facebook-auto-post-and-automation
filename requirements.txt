@@ -23,3 +23,7 @@ trio==0.22.0
 trio-websocket==0.10.2
 urllib3==1.26.15
 wsproto==1.2.0
+asgiref==3.6.0
+Django==4.2
+django-admin-datta==1.0.7
+sqlparse==0.4.4
