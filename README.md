@@ -1,5 +1,5 @@
 # facebook-auto-post
-This project is to do auto post in the marketplace of Facebook. I have tested on Windows 10.
+This project is to do auto post in the marketplace of Facebook. I have tested on Windows 10 //previous owner, now i'm using it on linux.
 
 ## Instructions:
 1. Fill the config.ini with the right info (check config_example.ini like example).
@@ -24,3 +24,11 @@ paypal.me/eselejuanito
 
 Email:
 eselejuanito@gmail.com# facebook-marketplace-automation
+
+### Upgrading it with
+#### django-site to manage post, add, remove.
+#### adjust old features
+#### new features like renew, delete one element, add one element for time through one flag
+##### making change to the database and marketplace_options.json according to the django model
+###### adding google photos download through google api
+###### renew features - auto_renew_posts.py can be used with crontab

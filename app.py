@@ -38,13 +38,12 @@ class App:
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@data-cookiebanner="accept_button"]'))).click() #per rimuover il pop-up dei cookies
         self.log_in()
         self.posts = self.fetch_all_posts()
-        print(self.posts)
         self.move_from_home_to_marketplace_create_item()
         for post in self.posts:
             self.move_from_home_to_marketplace_create_item()
             self.create_post(post)  
         sleep(2)
-        #self.driver.quit() da scommentare
+        self.driver.quit()
         
         
     def log_in(self):
@@ -155,10 +154,9 @@ class App:
         self.post_in_more_places(post[9])
         sleep(self.time_to_sleep)
         sleep(8)
-        print("ce l'hai quasi fatta signor capitano\n")
+
         print("//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']\n")
         post_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
-        print(post_button)
         post_button.click()
         sleep(self.time_to_sleep)
 
