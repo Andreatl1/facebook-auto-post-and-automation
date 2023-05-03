@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# credentials information
+config.ini
+
 # Distribution / packaging
 .Python
 build/

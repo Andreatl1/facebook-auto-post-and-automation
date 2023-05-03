@@ -54,12 +54,13 @@ class App:
 
 
     def renew_all_post(self):
-        #aggiungere un eccezione nel caso il bottone non ci sia
         sleep(6)
-        renew_buttons = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Rinnova']")))
-        for button in renew_buttons:
-            button.click()
-            sleep(self.time_to_sleep*3)
+        renew_buttons = self.driver.find_elements(By.XPATH, "//div[@aria-label='Rinnova']")
+        
+        if renew_buttons: #check if empty list
+            for renew_button in renew_buttons:
+                renew_button.click()
+                sleep(self.time_to_sleep)
 
 
 
