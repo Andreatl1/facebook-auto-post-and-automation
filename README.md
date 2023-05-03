@@ -26,7 +26,7 @@ Email:
 eselejuanito@gmail.com# facebook-marketplace-automation
 
 ### Upgrading it with
-#### django-site to manage post, add, remove.
+#### django-site to manage post: add, modify, remove.
 #### adjust old features
 #### new features like renew, delete one element, add one element for time through one flag
 ##### making change to the database and marketplace_options.json according to the django model
