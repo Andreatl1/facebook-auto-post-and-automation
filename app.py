@@ -14,10 +14,10 @@ from selenium.webdriver.firefox.service import Service
 
 class App:
     def __init__(self, email= "", password= "", 
-                 path="", language="", main_url="", marketplace_url="", binary_location="", driver_location="", time_to_sleep=""):
+                 img_base_path="", language="", main_url="", marketplace_url="", binary_location="", driver_location="", time_to_sleep=""):
         self.email = email
         self.password = password
-        self.path = path
+        self.img_base_path = img_base_path
         self.language = language
         self.marketplace_options = None
         self.posts = None
@@ -28,7 +28,7 @@ class App:
         # To remove the pop up notification window
         options = Options()
         options.binary_location = binary_location
-        options.set_preference("dom.webnotifications.enabled", False)
+        options.set_preference("dom.webnotifications.enabled", False) #add parameter for running firefox in background
         # geckodriver allows you to use emojis, chromedriver does not
         self.driver = webdriver.Firefox(service=Service(driver_location), options=options)
         self.driver.maximize_window()
@@ -37,15 +37,11 @@ class App:
         self.driver.get(self.main_url)
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@data-cookiebanner="accept_button"]'))).click() #per rimuover il pop-up dei cookies
         self.log_in()
+
+        # Loading posts data from db
         self.posts = self.fetch_all_posts()
-        self.move_from_home_to_marketplace_create_item()
-        for post in self.posts:
-            self.move_from_home_to_marketplace_create_item()
-            self.create_post(post)  
-        sleep(2)
-        self.driver.quit()
-        
-        
+        self.create_post()
+
     def log_in(self):
         email_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.ID, "email")))
         email_input.send_keys(self.email)
@@ -53,45 +49,6 @@ class App:
         password_input.send_keys(self.password)
         login_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@type='submit']")))
         login_button.click()
-        
-
-    def move_from_home_to_marketplace_create_item(self):
-        WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//a[@aria-label="Facebook"]')))
-        self.driver.get(self.marketplace_url)
-
-
-    def add_photos_to_post(self, post_folder):
-        photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[3]/div[2]/div/div[@role="button"]')))
-        photo_button.click()
-        sleep(2)
-        pyautogui.hotkey('ctrl', 'l')
-        sleep(self.time_to_sleep)
-        pyautogui.write(self.path + post_folder)
-        sleep(self.time_to_sleep)
-        pyautogui.press('backspace')
-        sleep(self.time_to_sleep)
-        pyautogui.press('enter')
-        sleep(self.time_to_sleep)
-        pyautogui.hotkey('ctrl', 'a')
-        sleep(self.time_to_sleep)
-        pyautogui.press('enter')
-        sleep(self.time_to_sleep)
-        sleep(2)
-    
-
-    def add_text_to_post(self, title, price, description, label):
-        title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
-        title_input.send_keys(title)
-        price_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/div/div/input")))
-        price_input.send_keys(price)
-        description_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[9]/div/div/div/div[@role="button"]')))
-        description_button.click()
-        description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/textarea")))
-        description_input.send_keys(description.replace("\r\n", "\n"))
-        if label:
-            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
-            label_input.send_keys(label)
-
 
     def fetch_all_posts(self):
         posts = None
@@ -112,6 +69,56 @@ class App:
 
         return posts
 
+    def move_from_home_to_marketplace_create_item(self):
+        WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//a[@aria-label="Facebook"]')))
+        self.driver.get(self.marketplace_url)
+
+    def create_posts(self):
+        for post in self.posts:
+            self.move_from_home_to_marketplace_create_item()
+            self.create_post(post)  
+        sleep(2)
+        self.driver.quit()
+        
+    def add_photos_to_post(self, post_folder):
+        photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[3]/div[2]/div/div[@role="button"]')))
+        photo_button.click()
+        sleep(2)
+        pyautogui.hotkey('ctrl', 'l')
+        sleep(self.time_to_sleep)
+        pyautogui.write(self.img_base_path + post_folder)
+        sleep(self.time_to_sleep)
+        pyautogui.press('backspace')
+        sleep(self.time_to_sleep)
+        pyautogui.press('enter')
+        sleep(self.time_to_sleep)
+        pyautogui.hotkey('ctrl', 'a')
+        sleep(self.time_to_sleep)
+        pyautogui.press('enter')
+        sleep(self.time_to_sleep)
+        sleep(2)
+    
+    def add_text_to_post(self, title, price, description, label):
+        title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
+        title_input.send_keys(title)
+        price_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/div/div/input")))
+        price_input.send_keys(price)
+        description_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[9]/div/div/div/div[@role="button"]')))
+        description_button.click()
+        description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/textarea")))
+        description_input.send_keys(description.replace("\r\n", "\n"))
+        if label:
+            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
+            label_input.send_keys(label)
+
+    def post_in_more_places(self, groups):
+        groups_positions = groups.split(",") #groups_positions = groups_names
+
+        for group_position in groups_positions:
+            #group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Marketplace"] +  "']/div/div/div/div[4]/div/div/div/div/div/div/div[2]/div[" + group_position + "]")))
+            group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), '" + group_position +"')]"))) #filtra in base al testo e funziona il click
+            group_input.click()
+            sleep(self.time_to_sleep)
 
     def create_post(self, post):
         self.add_photos_to_post(post[8])
@@ -145,20 +152,10 @@ class App:
 
 
     def get_element_position(self, key, specific):
+        #key = categories 
         if specific in self.marketplace_options[key]:
             return str(self.marketplace_options[key][specific])
         return -1
-
-
-    def post_in_more_places(self, groups):
-        groups_positions = groups.split(",") #groups_positions = groups_names
-
-        for group_position in groups_positions:
-            #group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Marketplace"] +  "']/div/div/div/div[4]/div/div/div/div/div/div/div[2]/div[" + group_position + "]")))
-            group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), '" + group_position +"')]"))) #filtra in base al testo e funziona il click
-            group_input.click()
-            sleep(self.time_to_sleep)
-
 
 if __name__ == '__main__':
     config_object = ConfigParser()
