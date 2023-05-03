@@ -190,43 +190,19 @@ class App:
             #buttons = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Collection"] + '"]/div/div/div[2]/div/div/div[3]/div/span/div/div[2]/div/div[2]/div/div[2]/div/div')
             
             #problema ci sono varie parti in quella pagina con la struttura aria-label='Altro'..., quindi direi di trovarlo in base alla parentela dei nodi e in base al titolo da rimuovere
-            buttons = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Collection"] + '"]') 
+            buttons = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Collection"] + '"]') # collection = altro
             print(buttons)
             
-            buttons[len(buttons) - 1].click()
-            print(buttons[len(buttons) - 1])
-            print('\n')
-            sleep(self.time_to_sleep)
-            sleep(self.time_to_sleep)
+            buttons[len(buttons) - 1].click() # open the menu and select delete
             sleep(self.time_to_sleep)
 
             delete_option = self.driver.find_elements_by_xpath("//div[@role='menu']/div[1]/div/div[1]/div/div")
-            delete_option[len(delete_option) - 1].click()
+            delete_option[len(delete_option) - 1].click() 
             sleep(self.time_to_sleep)
-            sleep(self.time_to_sleep)
-            sleep(self.time_to_sleep)
+            
         except:
             print("There is no more post to delete")
-            self.ask_to_continue = False
 
-        # Sometimes ask before delete the post
-        if (self.ask_to_continue):
-            delete_button = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Delete"] + '"]')
-            close_button = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Close"] + '"]')
-
-            print(delete_button)
-            print(close_button)
-            if (delete_button):
-                delete_button.click()
-                sleep(self.time_to_sleep)
-                sleep(self.time_to_sleep)
-                sleep(self.time_to_sleep)
-
-            elif (close_button):
-                close_button.click()
-                sleep(self.time_to_sleep)
-                sleep(self.time_to_sleep)
-                sleep(self.time_to_sleep)
 
     def delete_all_post(self):
         for post in self.posts:
