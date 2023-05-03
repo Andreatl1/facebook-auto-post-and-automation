@@ -8,4 +8,4 @@ post[6]: None                           = Post.option #unused
 post[7]:                                = Post.description
 post[8]: article1/                      = Post.path
 post[9]: MERCATINO 360 - REGGIO EMILIA  = Post.groups.name
-post[10]: None                          = Post.label
+post[10]: None                          = Post.label #unused
