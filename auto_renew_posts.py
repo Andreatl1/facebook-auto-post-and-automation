@@ -57,7 +57,8 @@ class App:
         #aggiungere un eccezzione nel caso il bottone non ci sia
         sleep(6)
         #e poi click sul bottone rinnova tutto
-
+        #group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(
+        #(By.XPATH, "//*[contains(text(), '" + group_position + "')]")))  # filtra in base al testo e funziona il click
 
 
 

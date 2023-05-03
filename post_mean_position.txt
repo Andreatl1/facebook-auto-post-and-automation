@@ -1,11 +1,11 @@
-post[0]: 1
-post[1]: forno ventilato BOMPANI
-post[2]: 100
-post[3]: Elettrodomestici
-post[4]: Usato - Come nuovo
-post[5]: None
-post[6]: None
-post[7]:  
-post[8]: article1/
-post[9]: MERCATINO 360 - REGGIO EMILIA
-post[10]: None
+post[0]: 1                              = Post.pk
+post[1]: forno ventilato BOMPANI        = Post.title
+post[2]: 100                            = Post.price
+post[3]: Elettrodomestici               = Post.categories
+post[4]: Usato - Come nuovo             = Post.state
+post[5]: None                           = Post.type #unused
+post[6]: None                           = Post.option #unused
+post[7]:                                = Post.description
+post[8]: article1/                      = Post.path
+post[9]: MERCATINO 360 - REGGIO EMILIA  = Post.groups.name
+post[10]: None                          = Post.label

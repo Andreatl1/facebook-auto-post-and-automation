@@ -116,7 +116,7 @@ class App:
         sleep(self.time_to_sleep)
         sleep(2)
 
-    def add_text_to_post(self, title, price, description, label):
+    def add_text_to_post(self, title, price, description):
         title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(
             (By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
         title_input.send_keys(title)
@@ -129,10 +129,6 @@ class App:
         description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(
             (By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] + "']/div/div/textarea")))
         description_input.send_keys(description.replace("\r\n", "\n"))
-        if label:
-            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(
-                (By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
-            label_input.send_keys(label)
 
     def post_in_more_places(self, groups):
         groups_positions = groups.split(",")  # groups_positions = groups_names
@@ -145,8 +141,8 @@ class App:
             sleep(self.time_to_sleep)
 
     def create_post(self, post):
-        self.add_photos_to_post(post[8])
-        self.add_text_to_post(post[1], post[2], post[7], post[10])
+        self.add_photos_to_post(post[8]) # Post.path
+        self.add_text_to_post(post[1], post[2], post[7]) # Post.pk, Post.title, Post.description,
 
         category_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(
             (By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Category"] + "']")))
@@ -154,7 +150,7 @@ class App:
 
         sleep(self.time_to_sleep)
         category_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(
-            (By.XPATH, "//div[@role='dialog']/div/div/div/span/div/div[" + self.get_element_position("categories", post[3]) + "]")))
+            (By.XPATH, "//div[@role='dialog']/div/div/div/span/div/div[" + self.get_element_position("categories", post[3]) + "]"))) # Post.price
         category_option.click()
         sleep(self.time_to_sleep)
 
@@ -163,7 +159,7 @@ class App:
         state_input.click()
         sleep(self.time_to_sleep)
         state_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(
-            (By.XPATH, '//div[@role="listbox"]/div/div/div/div/div[1]/div/div[' + self.get_element_position("states", post[4]) + ']')))
+            (By.XPATH, '//div[@role="listbox"]/div/div/div/div/div[1]/div/div[' + self.get_element_position("states", post[4]) + ']'))) # Post.state
         state_option.click()
         sleep(self.time_to_sleep)
 
@@ -171,7 +167,7 @@ class App:
             (By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Next Button"] + "']")))
         next_button.click()
 
-        self.post_in_more_places(post[9])
+        self.post_in_more_places(post[9]) # Post.label
         sleep(self.time_to_sleep)
         sleep(8)
 
@@ -231,10 +227,10 @@ class App:
                 sleep(self.time_to_sleep)
                 sleep(self.time_to_sleep)
                 sleep(self.time_to_sleep)
-                
+
     def delete_all_post(self):
         for post in self.posts:
-            self.delete_post(post.id)
+            self.delete_post(post[0]) # Post.id
 
     def get_element_position(self, key, specific):
         # key = categories
