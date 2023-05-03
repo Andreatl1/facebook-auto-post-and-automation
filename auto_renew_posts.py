@@ -54,11 +54,13 @@ class App:
 
 
     def renew_all_post(self):
-        #aggiungere un eccezzione nel caso il bottone non ci sia
+        #aggiungere un eccezione nel caso il bottone non ci sia
         sleep(6)
-        #e poi click sul bottone rinnova tutto
-        #group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(
-        #(By.XPATH, "//*[contains(text(), '" + group_position + "')]")))  # filtra in base al testo e funziona il click
+        renew_buttons = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Rinnova']")))
+        for button in renew_buttons:
+            button.click()
+            sleep(self.time_to_sleep*3)
+
 
 
 
