@@ -131,22 +131,6 @@ class App:
         state_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="listbox"]/div/div/div/div/div[1]/div/div[' + self.get_element_position("states", post[4]) + ']')))
         state_option.click()
         sleep(self.time_to_sleep)
-
-        if post[5] == "platforms":
-            type_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Platform"] +  "']")))
-            type_input.click()
-            sleep(self.time_to_sleep)
-            type_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("platforms", post[6]) + ']')))
-            type_option.click()
-            sleep(self.time_to_sleep)
-        
-        if post[5] == "devices":
-            type_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Device Name"] +  "']")))
-            type_input.click()
-            sleep(self.time_to_sleep)
-            type_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("devices", post[6]) + ']')))
-            type_option.click()
-            sleep(self.time_to_sleep)
     
         next_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Next Button"] +  "']")))
         next_button.click()
@@ -155,7 +139,6 @@ class App:
         sleep(self.time_to_sleep)
         sleep(8)
 
-        print("//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']\n")
         post_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
         post_button.click()
         sleep(self.time_to_sleep)

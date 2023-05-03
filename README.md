@@ -30,5 +30,6 @@ eselejuanito@gmail.com# facebook-marketplace-automation
 #### adjust old features
 #### new features like renew, delete one element, add one element for time through one flag
 ##### making change to the database and marketplace_options.json according to the django model
-###### adding google photos download through google api
 ###### renew features - auto_renew_posts.py can be used with crontab
+###### modify posts feature over facebook marketplace
+###### adding google photos download through google api
