@@ -231,6 +231,7 @@ class App:
                 sleep(self.time_to_sleep)
                 sleep(self.time_to_sleep)
                 sleep(self.time_to_sleep)
+                
     def delete_all_post(self):
         for post in self.posts:
             self.delete_post(post.id)

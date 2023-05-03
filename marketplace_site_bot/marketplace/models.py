@@ -29,6 +29,7 @@ class Post(models.Model):
     path = models.CharField(max_length=60)
     groups = models.CharField(max_length=2048)
     label = models.CharField(max_length=100)
+    active = models.BooleanField(default=True)
 
     post_groups = models.ManyToManyField(Group)
     state_id = models.ForeignKey(State, on_delete=models.RESTRICT)

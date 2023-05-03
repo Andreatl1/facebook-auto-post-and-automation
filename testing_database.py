@@ -7,5 +7,8 @@ cursor.execute(sqlite_select_query)
 posts = cursor.fetchall()
 cursor.close()
 
-for post in posts:    
-    print(posts)
+for post in posts:
+    i = 0
+    for data in post:
+        print(f"post[{i}]: {data}")
+        i = i + 1
