@@ -33,5 +33,11 @@ eselejuanito@gmail.com# facebook-marketplace-automation
 ###### renew features - auto_renew_posts.py can be used with crontab
 ###### modify posts feature over facebook marketplace
 ###### adding google photos download through google api
+###### ability to choose where to publish a product facebook - subito
+
 
 per avere l'ordine le foto vengono salvate in base a come sono state selezionate img/article/foto{i}.jpeg mandando ciò da js sulle pagine admin verso il gestore
+
+
+essendo che marketplace avvolte quando si elimina un annuncio in modo diretto dalla dashboard non lo elimina su alcuni gruppi
+cambiare l'implementazione per fare in modo vado su ogni gruppo ad eliminare il dato articolo

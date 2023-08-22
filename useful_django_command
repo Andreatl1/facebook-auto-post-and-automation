@@ -21,3 +21,4 @@ python manage.py loaddata products/fixtures/products.json
 https://github.com/django/django/tree/main/django/contrib/admin/templates/admin
 
 export PATH=$PATH:/home/andrea/Documenti/all_my_project/facebook-auto-post-and-automation
+oppure usare un link simbolico: ln -s pwd /usr/bin
